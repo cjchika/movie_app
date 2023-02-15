@@ -34,3 +34,56 @@ const signup = async (req, res) => {
     responseHandler.error(res);
   }
 };
+
+const signin = async (req, res) => {
+  try {
+    const { username, password } = req.body;
+
+    const user = await userModel
+      .findOne({ username })
+      .select("username password salt id displayName");
+
+    if (!user) return responseHandler.badrequest(res, "User not found");
+
+    if (!user.validPassword(password))
+      return responseHandler.badrequest(res, "Incorrect password");
+
+    const token = jsonwebtoken.sign(
+      { data: user.id },
+      process.env.TOKEN_SECRET,
+      { expiresIn: "24h" }
+    );
+
+    user.password = undefined;
+    user.salt = undefined;
+
+    responseHandler.created(res, {
+      token,
+      ...user._doc,
+      id: user.id,
+    });
+  } catch (error) {
+    responseHandler.error(res);
+  }
+};
+
+const updatePassword = async (req, res) => {
+  try {
+    const { password, newPassword } = req.body;
+
+    const user = await userModel
+      .findById(req.user.id)
+      .select("password id salt");
+
+    if (!user) return responseHandler.unauthorized(res);
+
+    if (!user.validPassword(password))
+      return responseHandler.badrequest(res, "Incorrect password");
+
+    await user.save();
+
+    responseHandler.ok(res);
+  } catch (error) {
+    responseHandler.error(res);
+  }
+};
