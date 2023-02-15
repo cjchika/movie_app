@@ -1,9 +1,9 @@
-import userModel from "../models/user.model";
-import tmdbApi from "../tmdb/tmdb.api";
-import responseHandler from "../handlers/response.handler";
-import favoriteModel from "../models/model.favorite";
-import reviewModel from "../models/model.review";
-import tokenMiddleware from "../middlewares/token.middleware";
+import userModel from "../models/user.model.js";
+import tmdbApi from "../tmdb/tmdb.api.js";
+import responseHandler from "../handlers/response.handler.js";
+import favoriteModel from "../models/model.favorite.js";
+import reviewModel from "../models/model.review.js";
+import tokenMiddleware from "../middlewares/token.middleware.js";
 
 const getList = async (req, res) => {
   try {
