@@ -87,3 +87,17 @@ const updatePassword = async (req, res) => {
     responseHandler.error(res);
   }
 };
+
+const getInfo = async (req, res) => {
+  try {
+    const user = await userModel.findById(req.user.id);
+
+    if (!user) return responseHandler.notfound(res);
+
+    responseHandler.ok(res, user);
+  } catch (error) {
+    responseHandler.error(res);
+  }
+};
+
+export default { signup, signin, updatePassword, getInfo };
