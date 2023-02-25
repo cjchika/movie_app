@@ -1,3 +1,5 @@
+import { ThemeProvider } from "@mui/material/styles";
+
 const App = () => {
   return (
     <div className="App">
