@@ -7,9 +7,9 @@ const PageWrapper = ({ state, children }) => {
 
   useEffect(() => {
     dispatch(setAppState(state));
-  }, []);
+  }, [state]);
 
-  return <div>PageWrapper</div>;
+  return children;
 };
 
 export default PageWrapper;
