@@ -45,7 +45,24 @@ const ScrollAppBar = ({ children, window }) => {
 };
 
 const Navbar = () => {
-  return <div>Navbar</div>;
+  const { user } = useSelector((state) => state.user);
+  const { appState } = useSelector((state) => state.appState);
+  const { themeMode } = useSelector((state) => state.themeMode);
+
+  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const dispatch = useDispatch();
+
+  const onSwitchTheme = () => {
+    const theme =
+      themeMode === themeMode.dark ? themeMode.light : themeMode.dark;
+    dispatch(setThemeMode(theme));
+  };
+
+  return (
+    <>
+      <ScrollAppBar>Navbar</ScrollAppBar>
+    </>
+  );
 };
 
 export default Navbar;
