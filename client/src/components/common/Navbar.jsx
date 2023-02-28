@@ -14,7 +14,7 @@ import {
 } from "@mui/material";
 import { Link } from "react-router-dom";
 import menuConfigs from "../../configs/menu.configs";
-import { themeMode } from "../../configs/theme.configs";
+import { themeModes } from "../../configs/theme.configs";
 import { setAuthModalOpen } from "../../redux/features/authModalSlice";
 import { setThemeMode } from "../../redux/features/themeModeSlice";
 import Logo from "./Logo";
@@ -54,7 +54,7 @@ const Navbar = () => {
 
   const onSwitchTheme = () => {
     const theme =
-      themeMode === themeMode.dark ? themeMode.light : themeMode.dark;
+      themeMode === themeModes.dark ? themeModes.light : themeModes.dark;
     dispatch(setThemeMode(theme));
   };
 
@@ -76,6 +76,36 @@ const Navbar = () => {
                 <Logo />
               </Box>
             </Stack>
+            {/* Main Menu */}
+            <Box
+              flexGrow={1}
+              alignItems="center"
+              display={{ xs: "none", md: "flex" }}
+            >
+              <Box sx={{ marginRight: "30px" }}>
+                <Logo />
+              </Box>
+              {menuConfigs.main.map((item, index) => (
+                <Button
+                  key={index}
+                  sx={{
+                    color: appState.includes(item.state)
+                      ? "primary.contrastText"
+                      : "inherit",
+                    mr: 2,
+                  }}
+                  component={Link}
+                  to={item.path}
+                  variant={appState.includes(item.state) ? "contained" : "text"}
+                >
+                  {item.display}
+                </Button>
+              ))}
+              <IconButton sx={{ color: "inherit" }} onClick={onSwitchTheme}>
+                {themeMode === themeModes.dark && <DarkModeOutlinedIcon />}
+                {themeMode === themeModes.light && <WbSunnyOutlinedIcon />}
+              </IconButton>
+            </Box>
             {/* Main Menu */}
           </Toolbar>
         </AppBar>
