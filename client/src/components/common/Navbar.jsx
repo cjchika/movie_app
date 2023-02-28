@@ -60,7 +60,26 @@ const Navbar = () => {
 
   return (
     <>
-      <ScrollAppBar>Navbar</ScrollAppBar>
+      <ScrollAppBar>
+        <AppBar elevation={0} sx={{ zIndex: 9999 }}>
+          <Toolbar
+            sx={{ alignItems: "center", justifyContent: "space-between" }}
+          >
+            <Stack direction="row" spacing={1} alignItems="center">
+              <IconButton
+                color="inherit"
+                sx={{ mr: 2, display: { md: "none" } }}
+              >
+                <MenuIcon />
+              </IconButton>
+              <Box sx={{ display: { xs: "inline-block", md: "none" } }}>
+                <Logo />
+              </Box>
+            </Stack>
+            {/* Main Menu */}
+          </Toolbar>
+        </AppBar>
+      </ScrollAppBar>
     </>
   );
 };
