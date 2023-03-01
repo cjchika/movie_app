@@ -59,7 +59,9 @@ const Sidebar = ({ open, toggleSidebar }) => {
             to={item.path}
             onClick={() => toggleSidebar(false)}
           >
-            <ListItemIcon>{item.icon}</ListItemIcon>
+            <ListItemIcon>
+              <item.icon />
+            </ListItemIcon>
             <ListItemText
               disableTypography
               primary={
@@ -90,7 +92,9 @@ const Sidebar = ({ open, toggleSidebar }) => {
                 to={item.path}
                 onClick={() => toggleSidebar(false)}
               >
-                <ListItemIcon>{item.icon}</ListItemIcon>
+                <ListItemIcon>
+                  <item.icon />
+                </ListItemIcon>
                 <ListItemText
                   disableTypography
                   primary={
