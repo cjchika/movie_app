@@ -110,7 +110,17 @@ const Navbar = () => {
             {/* Main Menu */}
 
             {/* User Menu */}
-            <UserMenu />
+            <Stack spacing={3} direction="row" alignItems="center">
+              {!user && (
+                <Button
+                  variant="contained"
+                  onClick={() => dispatch(setAuthModalOpen(true))}
+                >
+                  Sign in
+                </Button>
+              )}
+            </Stack>
+            {user && <UserMenu />}
           </Toolbar>
         </AppBar>
       </ScrollAppBar>
