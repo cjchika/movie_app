@@ -1,5 +1,12 @@
 import { LoadingButton } from "@mui/lab";
-import { Box, Alert, Button, Stack, TextField } from "@mui/material";
+import {
+  Box,
+  Alert,
+  Button,
+  Stack,
+  TextField,
+  Typography,
+} from "@mui/material";
 import { useFormik } from "formik";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
@@ -30,7 +37,7 @@ const SigninForm = ({ switchAuthState }) => {
     onSubmit: async (values) => {
       setErrorMessage(undefined);
       setIsLoadingRequest(true);
-      const { response, err } = await userApi.signin(values);
+      const { response, error } = await userApi.signin(values);
       setIsLoadingRequest(false);
 
       if (response) {
@@ -40,12 +47,13 @@ const SigninForm = ({ switchAuthState }) => {
         toast.success("Sign in successful");
       }
 
-      if (err) setErrorMessage(err.message);
+      if (error) setErrorMessage(error.message);
     },
   });
 
   return (
     <Box component="form" onSubmit={signinForm.handleSubmit}>
+      <Typography>Sign In</Typography>
       <Stack spacing={3}>
         <TextField
           type="text"
@@ -83,7 +91,7 @@ const SigninForm = ({ switchAuthState }) => {
         fullWidth
         size="large"
         variant="contained"
-        sx={{ marginT: 4 }}
+        sx={{ marginTop: 4 }}
         loading={isLoadingRequest}
       >
         Sign in
@@ -91,6 +99,13 @@ const SigninForm = ({ switchAuthState }) => {
       <Button fullWidth sx={{ marginTop: 1 }} onClick={() => switchAuthState()}>
         Sign up
       </Button>
+      {errorMessage && (
+        <Box sx={{ marginTop: 2 }}>
+          <Alert severity="error" variant="outlined">
+            {errorMessage}
+          </Alert>
+        </Box>
+      )}
     </Box>
   );
 };
