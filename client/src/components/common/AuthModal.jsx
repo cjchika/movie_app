@@ -42,7 +42,12 @@ const AuthModal = () => {
             boxShadow: 24,
             backgroundColor: "background.paper",
           }}
-        ></Box>
+        >
+          <Box sx={{ textAlign: "center", marginBottom: "2rem" }}>
+            <Logo />
+          </Box>
+          <h1>Hellllo</h1>
+        </Box>
       </Box>
     </Modal>
   );
