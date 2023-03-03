@@ -51,13 +51,13 @@ const AuthModal = () => {
 
           {action === actionState.signin && (
             <SigninForm
-              switchAuthState={() => switchAuthState(actionState.signin)}
+              switchAuthState={() => switchAuthState(actionState.signup)}
             />
           )}
 
           {action === actionState.signup && (
             <SignupForm
-              switchAuthState={() => switchAuthState(actionState.signup)}
+              switchAuthState={() => switchAuthState(actionState.signin)}
             />
           )}
         </Box>

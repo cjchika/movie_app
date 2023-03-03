@@ -53,7 +53,6 @@ const SigninForm = ({ switchAuthState }) => {
 
   return (
     <Box component="form" onSubmit={signinForm.handleSubmit}>
-      <Typography>Sign In</Typography>
       <Stack spacing={3}>
         <TextField
           type="text"
