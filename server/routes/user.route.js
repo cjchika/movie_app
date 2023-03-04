@@ -14,29 +14,29 @@ router.post(
     .exists()
     .withMessage("username is required")
     .isLength({ min: 8 })
-    .withMessage("Username minimum 8 characters")
+    .withMessage("username minimum 8 characters")
     .custom(async (value) => {
       const user = await userModel.findOne({ username: value });
-      if (user) return Promise.reject("Username already in used");
+      if (user) return Promise.reject("username already used");
     }),
   body("password")
     .exists()
     .withMessage("password is required")
     .isLength({ min: 8 })
-    .withMessage("Password minimum 8 characters"),
+    .withMessage("password minimum 8 characters"),
   body("confirmPassword")
     .exists()
     .withMessage("confirmPassword is required")
     .isLength({ min: 8 })
-    .withMessage("Confirm password minimum 8 characters")
+    .withMessage("confirmPassword minimum 8 characters")
     .custom((value, { req }) => {
       if (value !== req.body.password)
-        throw new Error("Confirm Password does not match");
+        throw new Error("confirmPassword not match");
       return true;
     }),
   body("displayName")
     .exists()
-    .withMessage("displatName is required")
+    .withMessage("displayName is required")
     .isLength({ min: 8 })
     .withMessage("displayName minimum 8 characters"),
   requestHandler.validate,

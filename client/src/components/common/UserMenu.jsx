@@ -41,7 +41,9 @@ const UserMenu = () => {
               key={index}
               onClick={() => setAnchorEl(null)}
             >
-              <ListItemIcon>{item.icon}</ListItemIcon>
+              <ListItemIcon>
+                <item.icon />
+              </ListItemIcon>
               <ListItemText
                 disableTypography
                 primary={
@@ -52,10 +54,7 @@ const UserMenu = () => {
               />
             </ListItemButton>
           ))}
-          <ListItemButton
-            sx={{ borderRadius: "10px" }}
-            onClick={() => dispatch(setUser(null))}
-          >
+          <ListItemButton onClick={() => dispatch(setUser(null))}>
             <ListItemIcon>
               <LogoutOutlineIcon />
             </ListItemIcon>
