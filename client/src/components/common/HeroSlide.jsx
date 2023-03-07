@@ -14,6 +14,9 @@ import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { toast } from "react-toastify";
 import SwiperCore, { Autoplay } from "swiper";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 SwiperCore.use([Autoplay]);
 
 import { setGlobalLoading } from "../../redux/features/globalLoadingSlice";
@@ -41,6 +44,8 @@ const HeroSlide = ({ mediaType, mediaCategory }) => {
         mediaCategory,
         page: 1,
       });
+
+      console.log({ response });
 
       if (response) setMovies(response.results);
       if (err) toast.error(err.message);
@@ -86,7 +91,31 @@ const HeroSlide = ({ mediaType, mediaCategory }) => {
         loop={true}
         modules={Autoplay}
         style={{ width: "100%", height: "max-content" }}
-      ></Swiper>
+        autoplay={{
+          delay: 3000,
+          disableOnInteraction: false,
+        }}
+      >
+        {movies.map((movie, index) => (
+          <SwiperSlide key={index}>
+            <Box
+              sx={{
+                paddingTop: {
+                  xs: "130%",
+                  sm: "80%",
+                  md: "60%",
+                  lg: "45%",
+                },
+                backgroundPosition: "top",
+                backgroundSize: "cover",
+                backgroundImage: `url(${tmdbConfigs.backdropPath(
+                  movie.backdrop_path || movie.poster_path
+                )})`,
+              }}
+            ></Box>
+          </SwiperSlide>
+        ))}
+      </Swiper>
     </Box>
   );
 };

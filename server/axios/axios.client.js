@@ -1,8 +1,12 @@
 import axios from "axios";
-import { response } from "express";
 
 const get = async (url) => {
-  const reponse = await axios.get(url);
+  const response = await axios.get(url, {
+    headers: {
+      Accept: "application/json",
+      "Content-Encoding": "identity",
+    },
+  });
   return response.data;
 };
 
