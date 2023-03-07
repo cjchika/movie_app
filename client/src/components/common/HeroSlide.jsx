@@ -11,9 +11,10 @@ import {
 } from "@mui/material";
 import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import { AutoPlay } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { toast } from "react-toastify";
+import SwiperCore, { Autoplay } from "swiper";
+SwiperCore.use([Autoplay]);
 
 import { setGlobalLoading } from "../../redux/features/globalLoadingSlice";
 import { routesGen } from "../../routes/routes";
@@ -63,10 +64,30 @@ const HeroSlide = ({ mediaType, mediaCategory }) => {
   }, [mediaType, mediaCategory, dispatch]);
 
   return (
-    <>
-      <h1>HeroSlide</h1>
-      <h1>HeroSlide</h1>
-    </>
+    <Box
+      sx={{
+        position: "relative",
+        color: "primary.contrastText",
+        "&::before": {
+          content: '"',
+          width: "100%",
+          height: "30%",
+          position: "absolute",
+          bottom: 0,
+          left: 0,
+          zIndex: 2,
+          pointerEvents: "none",
+          ...uiConfigs.style.gradientBGImage[theme.palette.mode],
+        },
+      }}
+    >
+      <Swiper
+        grabCursor={true}
+        loop={true}
+        modules={Autoplay}
+        style={{ width: "100%", height: "max-content" }}
+      ></Swiper>
+    </Box>
   );
 };
 
