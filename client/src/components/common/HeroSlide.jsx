@@ -54,6 +54,7 @@ const HeroSlide = ({ mediaType, mediaCategory }) => {
     const getGenres = async () => {
       dispatch(setGlobalLoading(true));
       const { response, err } = await genreApi.getList({ mediaType });
+      console.log(response);
       if (response) {
         setGenres(response.genres);
         getMedias();
