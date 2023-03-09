@@ -10,10 +10,10 @@ const tmdbEndpoints = {
     tmdbConfig.getUrl(`${mediaType}/${mediaId}/credits`),
   mediaVideos: ({ mediaType, mediaId }) =>
     tmdbConfig.getUrl(`${mediaType}/${mediaId}/videos`),
-  mediaImages: ({ mediaType, mediaId }) =>
-    tmdbConfig.getUrl(`${mediaType}/${mediaId}/images`),
   mediaRecommend: ({ mediaType, mediaId }) =>
     tmdbConfig.getUrl(`${mediaType}/${mediaId}/recommendations`),
+  mediaImages: ({ mediaType, mediaId }) =>
+    tmdbConfig.getUrl(`${mediaType}/${mediaId}/images`),
   mediaSearch: ({ mediaType, query, page }) =>
     tmdbConfig.getUrl(`search/${mediaType}`, { query, page }),
   personDetail: ({ personId }) => tmdbConfig.getUrl(`person/${personId}`),
