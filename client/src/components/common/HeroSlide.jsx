@@ -187,6 +187,18 @@ const HeroSlide = ({ mediaType, mediaCategory }) => {
                   >
                     {movie.overview}
                   </Typography>
+
+                  {/* Buttons */}
+                  <Button
+                    variant="contained"
+                    size="large"
+                    startIcon={<PlayArrowIcon />}
+                    component={Link}
+                    to={routesGen.mediaDetail(mediaType, movie.id)}
+                    sx={{ width: "max-content" }}
+                  >
+                    watch now
+                  </Button>
                 </Stack>
               </Box>
             </Box>
