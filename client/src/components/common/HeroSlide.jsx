@@ -75,7 +75,7 @@ const HeroSlide = ({ mediaType, mediaCategory }) => {
         position: "relative",
         color: "primary.contrastText",
         "&::before": {
-          content: '"',
+          content: '""',
           width: "100%",
           height: "30%",
           position: "absolute",

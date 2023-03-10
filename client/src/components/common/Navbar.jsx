@@ -34,12 +34,12 @@ const ScrollAppBar = ({ children, window }) => {
     sx: {
       color: trigger
         ? "text.primary"
-        : themeMode === themeMode.dark
+        : themeMode === themeModes.dark
         ? "primary.contrastText"
         : "text.primary",
       backgroundColor: trigger
         ? "background.paper"
-        : themeMode === themeMode.dark
+        : themeMode === themeModes.dark
         ? "transparent"
         : "background.paper",
     },
@@ -78,11 +78,13 @@ const Navbar = () => {
               >
                 <MenuIcon />
               </IconButton>
+
               <Box sx={{ display: { xs: "inline-block", md: "none" } }}>
                 <Logo />
               </Box>
             </Stack>
-            {/* Main Menu */}
+
+            {/* main menu */}
             <Box
               flexGrow={1}
               alignItems="center"
@@ -112,20 +114,21 @@ const Navbar = () => {
                 {themeMode === themeModes.light && <WbSunnyOutlinedIcon />}
               </IconButton>
             </Box>
-            {/* Main Menu */}
+            {/* main menu */}
 
-            {/* User Menu */}
+            {/* user menu */}
             <Stack spacing={3} direction="row" alignItems="center">
               {!user && (
                 <Button
                   variant="contained"
                   onClick={() => dispatch(setAuthModalOpen(true))}
                 >
-                  Sign in
+                  sign in
                 </Button>
               )}
             </Stack>
             {user && <UserMenu />}
+            {/* user menu */}
           </Toolbar>
         </AppBar>
       </ScrollAppBar>
