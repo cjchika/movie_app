@@ -163,7 +163,7 @@ const HeroSlide = ({ mediaType, mediaCategory }) => {
                     {/* Rating */}
                     <CircularRate value={movie.vote_average} />
 
-                    <Divider orientation="vertial" />
+                    <Divider orientation="vertical" />
                     {/* Genres */}
                     {[...movie.genre_ids]
                       .splice(0, 2)
