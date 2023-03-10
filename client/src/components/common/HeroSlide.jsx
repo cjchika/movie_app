@@ -153,10 +153,39 @@ const HeroSlide = ({ mediaType, mediaCategory }) => {
                     fontSize={{ xs: "2rem", md: "2rem", lg: "4rem" }}
                     fontWeight="700"
                     sx={{
-                      ...uiConfigs.style.typoLines(2),
+                      ...uiConfigs.style.typoLines(2, "left"),
                     }}
                   >
                     {movie.title || movie.name}
+                  </Typography>
+
+                  <Stack direction="row" spacing={1} alignItems="center">
+                    {/* Rating */}
+                    <CircularRate value={movie.vote_average} />
+
+                    <Divider orientation="vertial" />
+                    {/* Genres */}
+                    {[...movie.genre_ids]
+                      .splice(0, 2)
+                      .map((genredId, index) => (
+                        <Chip
+                          variant="filled"
+                          color="primary"
+                          key={index}
+                          label={
+                            genres.find((e) => e.id === genredId) &&
+                            genres.find((e) => e.id === genredId).name
+                          }
+                        />
+                      ))}
+                  </Stack>
+
+                  {/* Overview */}
+                  <Typography
+                    variant="body1"
+                    sx={{ ...uiConfigs.style.typoLines(3) }}
+                  >
+                    {movie.overview}
                   </Typography>
                 </Stack>
               </Box>
