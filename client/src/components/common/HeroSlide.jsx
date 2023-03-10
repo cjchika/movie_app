@@ -113,7 +113,54 @@ const HeroSlide = ({ mediaType, mediaCategory }) => {
                   movie.backdrop_path || movie.poster_path
                 )})`,
               }}
-            ></Box>
+            />
+            <Box
+              sx={{
+                width: "100%",
+                height: "100%",
+                position: "absolute",
+                top: 0,
+                left: 0,
+                ...uiConfigs.style.horizontalGradientBGImage[
+                  theme.palette.mode
+                ],
+              }}
+            />
+            <Box
+              sx={{
+                width: "100%",
+                height: "100%",
+                position: "absolute",
+                top: 0,
+                left: 0,
+                paddingX: { sm: "10px", md: "5rem", lg: "10rem" },
+              }}
+            >
+              <Box
+                sx={{
+                  height: "100%",
+                  display: "flex",
+                  alignItems: "center",
+                  paddingX: "30px",
+                  color: "text.primary",
+                  width: { sm: "unset", md: "30%", lg: "40%" },
+                }}
+              >
+                <Stack spacing={4} direction="column">
+                  {/* Title */}
+                  <Typography
+                    variant="h4"
+                    fontSize={{ xs: "2rem", md: "2rem", lg: "4rem" }}
+                    fontWeight="700"
+                    sx={{
+                      ...uiConfigs.style.typoLines(2),
+                    }}
+                  >
+                    {movie.title || movie.name}
+                  </Typography>
+                </Stack>
+              </Box>
+            </Box>
           </SwiperSlide>
         ))}
       </Swiper>
