@@ -18,7 +18,7 @@ const MediaItem = ({ media, mediaType }) => {
   const [rate, setRate] = useState(null);
 
   useEffect(() => {
-    setRate(media.title || media.name || media.Title);
+    setTitle(media.title || media.name || media.Title);
 
     setPosterPath(
       tmdbConfigs.posterPath(
@@ -116,11 +116,40 @@ const MediaItem = ({ media, mediaType }) => {
               <Stack spacing={{ xs: 1, md: 2 }}>
                 {rate && <CircularRate value={rate} />}
                 <Typography>{releaseDate}</Typography>
+                <Typography
+                  variant="body1"
+                  fontWeight="700"
+                  sx={{
+                    fontSize: "1rem",
+                    ...uiConfigs.style.typoLines(1, "Left"),
+                  }}
+                >
+                  {title}
+                </Typography>
               </Stack>
             </Box>
           </>
         )}
         {/* Movie or Tv item */}
+
+        {/* People */}
+        {mediaType === "people" && (
+          <Box
+            sx={{
+              position: "absolute",
+              width: "100%",
+              height: "max-content",
+              bottom: 0,
+              padding: "10px",
+              backgroundColor: "rgba(0,0,0,0.6)",
+            }}
+          >
+            <Typography sx={{ ...uiConfigs.style.typoLines(1, "Left") }}>
+              {media.name}
+            </Typography>
+          </Box>
+        )}
+        {/* People */}
       </Box>
     </Link>
   );
