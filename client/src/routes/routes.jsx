@@ -26,17 +26,17 @@ const routes = [
     state: "home",
   },
   {
-    index: "/person/:personId",
+    path: "/person/:personId",
     element: <PersonDetail />,
     state: "person.detial",
   },
   {
-    index: "/search",
+    path: "/search",
     element: <MediaSearch />,
     state: "search",
   },
   {
-    index: "/password-update",
+    path: "/password-update",
     element: (
       <ProtectedPage>
         <PasswordUpdate />
@@ -45,7 +45,7 @@ const routes = [
     state: "password.update",
   },
   {
-    index: "/favorites",
+    path: "/favorites",
     element: (
       <ProtectedPage>
         <FavoriteList />
@@ -54,7 +54,7 @@ const routes = [
     state: "favorites",
   },
   {
-    index: "/reviews",
+    path: "/reviews",
     element: (
       <ProtectedPage>
         <ReviewList />
@@ -63,11 +63,11 @@ const routes = [
     state: "reviews",
   },
   {
-    index: "/:mediaType",
+    path: "/:mediaType",
     element: <MediaList />,
   },
   {
-    index: "/:mediaType/:mediaId",
+    path: "/:mediaType/:mediaId",
     element: <MediaDetail />,
   },
 ];
