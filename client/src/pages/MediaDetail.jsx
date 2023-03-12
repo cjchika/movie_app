@@ -22,6 +22,8 @@ import { setGlobalLoading } from "../redux/features/globalLoadingSlice";
 import { setAuthModalOpen } from "../redux/features/authModalSlice";
 import { addFavorite, removeFavorite } from "../redux/features/userSlice";
 
+import CastSlide from "../components/common/CastSlide";
+
 const MediaDetail = () => {
   const { mediaType, mediaId } = useParams();
 
@@ -174,6 +176,12 @@ const MediaDetail = () => {
                   </Button>
                 </Stack>
                 {/* Buttons */}
+
+                {/* Cast */}
+                <Container header="cast">
+                  <CastSlide casts={media.credits.cast} />
+                </Container>
+                {/* Cast */}
               </Stack>
             </Box>
             {/* Media Info */}
