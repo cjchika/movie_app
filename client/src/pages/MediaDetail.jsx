@@ -64,6 +64,43 @@ const MediaDetail = () => {
           media.backdropPath || media.poster_path
         )}
       />
+      <Box
+        sx={{ color: "primary.contrastText", ...uiConfigs.style.mainContent }}
+      >
+        {/* Media Content */}
+        <Box sx={{ marginTop: { xs: "-10rem", md: "-15rem", lg: "-20rem" } }}>
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: { md: "row", xs: "column" },
+            }}
+          >
+            {/* Poster */}
+            <Box
+              sx={{
+                width: { xs: "70%", sm: "50%", md: "40%" },
+                margin: { xs: "0 auto 2rem", md: "0 2rem 0 0" },
+              }}
+            >
+              <Box
+                sx={{
+                  paddingTop: "140%",
+                  ...uiConfigs.style.backgroundImage(
+                    tmdbConfigs.posterPath(
+                      media.posterPath || media.backdrop_path
+                    )
+                  ),
+                }}
+              ></Box>
+            </Box>
+            {/* Poster */}
+
+            {/* Media Info */}
+            {/* Media Info */}
+          </Box>
+        </Box>
+        {/* Media Content */}
+      </Box>
     </>
   ) : null;
 };

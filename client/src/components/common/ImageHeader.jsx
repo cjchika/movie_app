@@ -2,7 +2,7 @@ import React from "react";
 import { Box, useTheme } from "@mui/material";
 import uiConfigs from "../../configs/ui.configs";
 
-const ImageHeader = () => {
+const ImageHeader = ({ imgPath }) => {
   const theme = useTheme();
   return (
     <Box

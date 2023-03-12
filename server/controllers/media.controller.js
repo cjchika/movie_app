@@ -59,9 +59,7 @@ const getDetail = async (req, res) => {
 
     const media = await tmdbApi.mediaDetail(params);
 
-    const credits = await tmdbApi.mediaCredits(params);
-
-    media.credits = credits;
+    media.credits = await tmdbApi.mediaCredits(params);
 
     const videos = await tmdbApi.mediaVideos(params);
 
@@ -76,7 +74,7 @@ const getDetail = async (req, res) => {
     const tokenDecoded = tokenMiddleware.tokenDecode(req);
 
     if (tokenDecoded) {
-      const user = await userModel.findOne(tokenDecoded.data);
+      const user = await userModel.findById(tokenDecoded.data);
 
       if (user) {
         const isFavorite = await favoriteModel.findOne({
@@ -93,7 +91,8 @@ const getDetail = async (req, res) => {
       .sort("-createdAt");
 
     responseHandler.ok(res, media);
-  } catch (error) {
+  } catch (e) {
+    // console.log(e);
     responseHandler.error(res);
   }
 };
