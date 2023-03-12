@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import FavoriteIcon from "@mui/icons-material/Favorite";
-import FavoriteeBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
+import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 
 import { LoadingButton } from "@mui/lab";
@@ -116,7 +116,7 @@ const MediaDetail = () => {
                 {/* Title */}
 
                 {/* Rating and Genres */}
-                <Stack direction="row" spacing={1}>
+                <Stack direction="row" spacing={1} alignItems="center">
                   {/* Rating */}
                   <CircularRate value={media.vote_average} />
                   {/* Rating */}
@@ -132,8 +132,48 @@ const MediaDetail = () => {
                   ))}
                   {/* Genres */}
                 </Stack>
-
                 {/* Rating and Genres */}
+
+                {/* Overview */}
+                <Typography
+                  variant="body1"
+                  sx={{ ...uiConfigs.style.typoLines(5) }}
+                >
+                  {media.overview}
+                </Typography>
+                {/* Overview */}
+
+                {/* Buttons */}
+                <Stack direction="row" spacing={1}>
+                  <LoadingButton
+                    variant="text"
+                    sx={{
+                      width: "max-content",
+                      "& .MuiButton-starIcon": { marginRight: "0" },
+                    }}
+                    size="large"
+                    startIcon={
+                      isFavorite ? (
+                        <FavoriteIcon />
+                      ) : (
+                        <FavoriteBorderOutlinedIcon />
+                      )
+                    }
+                    loadingPosition="start"
+                    loading={onRequest}
+                    //onClick={}
+                  />
+                  <Button
+                    variant="contained"
+                    sx={{ width: "max-content" }}
+                    size="large"
+                    startIcon={<PlayArrowIcon />}
+                    onClick={() => videoRef.current.scrollIntoView()}
+                  >
+                    watch now
+                  </Button>
+                </Stack>
+                {/* Buttons */}
               </Stack>
             </Box>
             {/* Media Info */}
