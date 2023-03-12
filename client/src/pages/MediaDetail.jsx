@@ -96,6 +96,46 @@ const MediaDetail = () => {
             {/* Poster */}
 
             {/* Media Info */}
+            <Box
+              sx={{ width: { xs: "100%", md: "60%" }, color: "text.primary" }}
+            >
+              <Stack spacing={5}>
+                {/* Title */}
+                <Typography
+                  variant="h4"
+                  fontSize={{ xs: "2rem", md: "2rem", lg: "4rem" }}
+                  fontWeight="700"
+                  sx={{ ...uiConfigs.style.typoLines(2, "left") }}
+                >
+                  {`${media.title || media.name} ${
+                    mediaType === tmdbConfigs.mediaType.movie
+                      ? media.release_date.split("-")[0]
+                      : media.first_air_date.split("-")[0]
+                  }`}
+                </Typography>
+                {/* Title */}
+
+                {/* Rating and Genres */}
+                <Stack direction="row" spacing={1}>
+                  {/* Rating */}
+                  <CircularRate value={media.vote_average} />
+                  {/* Rating */}
+                  <Divider orientation="vertical" />
+                  {/* Genres */}
+                  {genres.map((genre, index) => (
+                    <Chip
+                      label={genre.name}
+                      variant="filled"
+                      color="primary"
+                      key={index}
+                    />
+                  ))}
+                  {/* Genres */}
+                </Stack>
+
+                {/* Rating and Genres */}
+              </Stack>
+            </Box>
             {/* Media Info */}
           </Box>
         </Box>
