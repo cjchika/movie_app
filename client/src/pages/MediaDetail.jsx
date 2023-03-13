@@ -30,7 +30,7 @@ const MediaDetail = () => {
   const { user, listFavorites } = useSelector((state) => state.user);
 
   const [media, setMedia] = useState();
-  const [isFavorite, setisFavorite] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(false);
   const [onRequest, setOnRequest] = useState(false);
   const [genres, setGenres] = useState([]);
 
@@ -50,7 +50,7 @@ const MediaDetail = () => {
 
       if (response) {
         setMedia(response);
-        setisFavorite(response.isFavorite);
+        setIsFavorite(response.isFavorite);
         setGenres(response.genres.splice(0, 2));
       }
 
@@ -58,6 +58,38 @@ const MediaDetail = () => {
     };
     getMedia();
   }, [mediaType, mediaId, dispatch]);
+
+  const onFavoriteClick = async () => {
+    if (!user) return dispatch(setAuthModalOpen(true));
+
+    if (onRequest) return;
+
+    if (isFavorite) {
+      return;
+    }
+
+    setOnRequest(true);
+
+    const body = {
+      mediaId: media.id,
+      mediaTitle: media.title || media.name,
+      mediaType: mediaType,
+      mediaPoster: media.poster_path,
+      mediaRate: media.vote_average,
+    };
+
+    const { response, err } = await favoriteApi.add(body);
+
+    setOnRequest(false);
+
+    if (err) toast.error(err.message);
+
+    if (response) {
+      dispatch(addFavorite(response));
+      setIsFavorite(true);
+      toast.success("Add favorite success");
+    }
+  };
 
   return media ? (
     <>
@@ -151,7 +183,7 @@ const MediaDetail = () => {
                     variant="text"
                     sx={{
                       width: "max-content",
-                      "& .MuiButton-starIcon": { marginRight: "0" },
+                      "& .MuiButon-starIcon": { marginRight: "0" },
                     }}
                     size="large"
                     startIcon={
@@ -163,7 +195,7 @@ const MediaDetail = () => {
                     }
                     loadingPosition="start"
                     loading={onRequest}
-                    //onClick={}
+                    onClick={onFavoriteClick}
                   />
                   <Button
                     variant="contained"

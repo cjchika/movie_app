@@ -28,7 +28,7 @@ router.post(
     .withMessage("mediaType invalid"),
   body("mediaTitle").exists().withMessage("mediaTitle is required"),
   body("mediaPoster").exists().withMessage("mediaPoster is required"),
-  body("mediaRating").exists().withMessage("mediaRating is required"),
+  body("mediaRate").exists().withMessage("mediaRate is required"),
   requestHandler.validate,
   reviewController.createReview
 );

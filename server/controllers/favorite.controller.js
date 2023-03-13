@@ -18,7 +18,7 @@ const addFavorite = async (req, res) => {
     await favorite.save();
 
     responseHandler.created(res, favorite);
-  } catch (error) {
+  } catch {
     responseHandler.error(res);
   }
 };
@@ -37,7 +37,7 @@ const removeFavorite = async (req, res) => {
     await favorite.remove();
 
     responseHandler.ok(res);
-  } catch (error) {
+  } catch {
     responseHandler.error(res);
   }
 };

@@ -1,5 +1,4 @@
 import privateClient from "../client/private.client";
-import publicClient from "../client/public.client";
 
 const favoriteEndpoints = {
   list: "user/favorites",
@@ -10,48 +9,37 @@ const favoriteEndpoints = {
 const favoriteApi = {
   getList: async () => {
     try {
-      const response = await privateClient.get(favoriteEndpoints.list());
+      const response = await privateClient.get(favoriteEndpoints.list);
+
       return { response };
-    } catch (error) {
-      {
-        return { error };
-      }
+    } catch (err) {
+      return { err };
     }
   },
-  addFavorite: async ({
-    mediaId,
-    mediaType,
-    mediaTitle,
-    mediaPoster,
-    mediaRate,
-  }) => {
+  add: async ({ mediaId, mediaType, mediaTitle, mediaPoster, mediaRate }) => {
     try {
-      const response = await privateClient.post(
-        favoriteEndpoints.add({
-          mediaId,
-          mediaType,
-          mediaTitle,
-          mediaPoster,
-          mediaRate,
-        })
-      );
+      const response = await privateClient.post(favoriteEndpoints.add, {
+        mediaId,
+        mediaType,
+        mediaTitle,
+        mediaPoster,
+        mediaRate,
+      });
+
       return { response };
-    } catch (error) {
-      {
-        return { error };
-      }
+    } catch (err) {
+      return { err };
     }
   },
-  removeFavorite: async ({ favoriteId }) => {
+  remove: async ({ favoriteId }) => {
     try {
       const response = await privateClient.delete(
         favoriteEndpoints.remove({ favoriteId })
       );
+
       return { response };
-    } catch (error) {
-      {
-        return { error };
-      }
+    } catch (err) {
+      return { err };
     }
   },
 };
