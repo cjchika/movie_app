@@ -252,6 +252,12 @@ const MediaDetail = () => {
           </Container>
         </div>
         {/* Media Videos */}
+
+        {/* Media Backdrop */}
+        {media.images.backdrops.length > 0 && (
+          <Container header="backdrops"></Container>
+        )}
+        {/* Media Backdrop */}
       </Box>
     </>
   ) : null;
