@@ -278,14 +278,22 @@ const MediaDetail = () => {
         {/* Media Reviews */}
 
         {/* Media Recommendation */}
-        {media.recommend.length > 0 && (
-          <Container header="you may also like">
+
+        <Container header="you may also like">
+          {media.recommend.length > 0 && (
             <RecommendationSlide
               medias={media.recommend}
               mediaType={mediaType}
             />
-          </Container>
-        )}
+          )}
+          {media.recommend.length > 0 && (
+            <MediaSlide
+              mediaCategory={tmdbConfigs.mediaCategory.top_rated}
+              mediaType={mediaType}
+            />
+          )}
+        </Container>
+
         {/* Media Recommendation */}
       </Box>
     </>
