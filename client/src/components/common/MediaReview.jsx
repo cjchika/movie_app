@@ -9,7 +9,7 @@ import {
   Typography,
 } from "@mui/material";
 import SendOutlineIcon from "@mui/icons-material/SendOutlined";
-import DeleteIcone from "@mui/icons-material/Delete";
+import DeleteIcon from "@mui/icons-material/Delete";
 import { toast } from "react-toastify";
 import dayjs from "dayjs";
 import { useSelector } from "react-redux";
@@ -55,6 +55,22 @@ const MediaReview = ({ review, onRemoved }) => {
           <Typography variant="body1" textAlign="justify">
             {review.content}
           </Typography>
+          {user && user.id === review.user.id && (
+            <LoadingButton
+              variant="contained"
+              startIcon={<DeleteIcon />}
+              loadingPosition="start"
+              loading={onRequest}
+              onClick={onRemove}
+              sx={{
+                position: { xs: "relative", md: "absolute" },
+                right: { xs: 0, md: 0 },
+                width: "max-content",
+              }}
+            >
+              remove
+            </LoadingButton>
+          )}
         </Stack>
       </Stack>
     </Box>
