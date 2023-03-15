@@ -15,8 +15,9 @@ import dayjs from "dayjs";
 import { useSelector } from "react-redux";
 import Container from "./Container";
 import reviewApi from "../../api/modules/review.api";
+import TextAvatar from "./TextAvatar";
 
-const MediaReview = ({ review, onRemoved }) => {
+const ReviewItem = ({ review, onRemoved }) => {
   const { user } = useSelector((state) => state.user);
   const [onRequest, setOnRequest] = useState(false);
 
@@ -41,7 +42,7 @@ const MediaReview = ({ review, onRemoved }) => {
     >
       <Stack direction="row" spacing={2}>
         {/* Avatar */}
-
+        <TextAvatar text={review.user.displayName} />
         {/* Avatar */}
         <Stack spacing={2} flexGrow={1}>
           <Stack spacing={1}>
@@ -77,4 +78,8 @@ const MediaReview = ({ review, onRemoved }) => {
   );
 };
 
-export default MediaReview;
+export default ReviewItem;
+
+const MediaReview = ({ reviews, media, mediaType }) => {
+  const { user } = useSelector((state) => state.user);
+};
