@@ -78,8 +78,6 @@ const ReviewItem = ({ review, onRemoved }) => {
   );
 };
 
-export default ReviewItem;
-
 const MediaReview = ({ reviews, media, mediaType }) => {
   const { user } = useSelector((state) => state.user);
   const [listReviews, setListReviews] = useState([]);
@@ -150,10 +148,52 @@ const MediaReview = ({ reviews, media, mediaType }) => {
           {filteredReviews.map((item) => (
             <Box key={item.id}>
               <ReviewItem review={item} onRemoved={onRemoved} />
+              <Divider
+                sx={{
+                  display: { xs: "block", md: "none" },
+                }}
+              />
             </Box>
           ))}
+          {filteredReviews.length < listReviews.length && (
+            <Button onClick={onLoadMore}>load more</Button>
+          )}
         </Stack>
+        {user && (
+          <>
+            <Divider />
+            <Stack direction="row" spacing={2}>
+              <TextAvatar text={user.displayName} />
+              <Stack spacing={2} flexGrow={1}>
+                <Typography variant="h6" fontWeight="700">
+                  {user.displayName}
+                </Typography>
+                <TextField
+                  value={content}
+                  onChange={(e) => setContent(e.target.value)}
+                  multiline
+                  rows={4}
+                  placeholder="Write your review"
+                  variant="outlined"
+                />
+                <LoadingButton
+                  variant="contained"
+                  size="large"
+                  sx={{ width: "max-content" }}
+                  startIcon={<SendOutlineIcon />}
+                  loadingPosition="start"
+                  loading={onRequest}
+                  onClick={onAddReview}
+                >
+                  post
+                </LoadingButton>
+              </Stack>
+            </Stack>
+          </>
+        )}
       </Container>
     </>
   );
 };
+
+export default MediaReview;
