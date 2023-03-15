@@ -121,4 +121,39 @@ const MediaReview = ({ reviews, media, mediaType }) => {
       setContent("");
     }
   };
+
+  const onLoadMore = () => {
+    setFilteredReviews([
+      ...filteredReviews,
+      ...[...listReviews].splice(page * skip, skip),
+    ]);
+    setPage(page + 1);
+  };
+
+  const onRemoved = (id) => {
+    if (listReviews.findIndex((e) => e.id === id) !== -1) {
+      const newListReviews = [...listReviews].filter((e) => e.id !== id);
+      setListReviews(newListReviews);
+      setFilteredReviews([...newListReviews].splice(0, page * skip));
+    } else {
+      setFilteredReviews([...filteredReviews].filter((e) => e.id !== id));
+    }
+
+    setReviewCount(reviewCount - 1);
+    toast.success("Remove review success.");
+  };
+
+  return (
+    <>
+      <Container header={`Reviews ${reviewCount}`}>
+        <Stack spacing={4} marginBottom={2}>
+          {filteredReviews.map((item) => (
+            <Box key={item.id}>
+              <ReviewItem review={item} onRemoved={onRemoved} />
+            </Box>
+          ))}
+        </Stack>
+      </Container>
+    </>
+  );
 };
