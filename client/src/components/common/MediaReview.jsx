@@ -82,4 +82,20 @@ export default ReviewItem;
 
 const MediaReview = ({ reviews, media, mediaType }) => {
   const { user } = useSelector((state) => state.user);
+  const [listReviews, setListReviews] = useState([]);
+  const [filteredReviews, setFilteredReviews] = useState([]);
+  const [page, setPage] = useState(1);
+  const [onRequest, setOnRequest] = useState(false);
+  const [content, setContent] = useState("");
+  const [reviewCount, setReviewCount] = useState(0);
+
+  const skip = 4;
+
+  useEffect(() => {
+    first;
+
+    return () => {
+      second;
+    };
+  }, [third]);
 };
