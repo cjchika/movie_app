@@ -92,10 +92,33 @@ const MediaReview = ({ reviews, media, mediaType }) => {
   const skip = 4;
 
   useEffect(() => {
-    first;
+    setListReviews([...reviews]);
+    setFilteredReviews([...reviews].splice(0, skip));
+    setReviewCount(reviews.length);
+  }, [reviews]);
 
-    return () => {
-      second;
+  const onAddReview = async () => {
+    if (onRequest) return;
+    setOnRequest(true);
+
+    const body = {
+      content,
+      mediaId: media.id,
+      mediaType,
+      mediaTitle: media.title || media.name,
+      mediaPoster: media.poster_path,
     };
-  }, [third]);
+
+    const { response, err } = await reviewApi.add(body);
+    setOnRequest(false);
+
+    if (err) toast.error(err.message);
+    if (response) {
+      toast.success("Post review success");
+
+      setFilteredReviews(...filteredReviews, response);
+      setReviewCount(reviewCount + 1);
+      setContent("");
+    }
+  };
 };
