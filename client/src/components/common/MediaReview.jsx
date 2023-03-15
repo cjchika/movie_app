@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { LoadingButton } from "@mui/lab";
 import {
   Box,
@@ -8,7 +7,8 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import SendOutlineIcon from "@mui/icons-material/SendOutlined";
+import { useEffect, useState } from "react";
+import SendOutlinedIcon from "@mui/icons-material/SendOutlined";
 import DeleteIcon from "@mui/icons-material/Delete";
 import { toast } from "react-toastify";
 import dayjs from "dayjs";
@@ -19,6 +19,7 @@ import TextAvatar from "./TextAvatar";
 
 const ReviewItem = ({ review, onRemoved }) => {
   const { user } = useSelector((state) => state.user);
+
   const [onRequest, setOnRequest] = useState(false);
 
   const onRemove = async () => {
@@ -30,6 +31,7 @@ const ReviewItem = ({ review, onRemoved }) => {
     if (err) toast.error(err.message);
     if (response) onRemoved(review.id);
   };
+
   return (
     <Box
       sx={{
@@ -41,9 +43,9 @@ const ReviewItem = ({ review, onRemoved }) => {
       }}
     >
       <Stack direction="row" spacing={2}>
-        {/* Avatar */}
+        {/* avatar */}
         <TextAvatar text={review.user.displayName} />
-        {/* Avatar */}
+        {/* avatar */}
         <Stack spacing={2} flexGrow={1}>
           <Stack spacing={1}>
             <Typography variant="h6" fontWeight="700">
@@ -65,7 +67,8 @@ const ReviewItem = ({ review, onRemoved }) => {
               onClick={onRemove}
               sx={{
                 position: { xs: "relative", md: "absolute" },
-                right: { xs: 0, md: 0 },
+                right: { xs: 0, md: "10px" },
+                marginTop: { xs: 2, md: 0 },
                 width: "max-content",
               }}
             >
@@ -108,13 +111,14 @@ const MediaReview = ({ reviews, media, mediaType }) => {
     };
 
     const { response, err } = await reviewApi.add(body);
+
     setOnRequest(false);
 
     if (err) toast.error(err.message);
     if (response) {
       toast.success("Post review success");
 
-      setFilteredReviews(...filteredReviews, response);
+      setFilteredReviews([...filteredReviews, response]);
       setReviewCount(reviewCount + 1);
       setContent("");
     }
@@ -138,12 +142,13 @@ const MediaReview = ({ reviews, media, mediaType }) => {
     }
 
     setReviewCount(reviewCount - 1);
-    toast.success("Remove review success.");
+
+    toast.success("Remove review success");
   };
 
   return (
     <>
-      <Container header={`Reviews ${reviewCount}`}>
+      <Container header={`Reviews (${reviewCount})`}>
         <Stack spacing={4} marginBottom={2}>
           {filteredReviews.map((item) => (
             <Box key={item.id}>
@@ -180,7 +185,7 @@ const MediaReview = ({ reviews, media, mediaType }) => {
                   variant="contained"
                   size="large"
                   sx={{ width: "max-content" }}
-                  startIcon={<SendOutlineIcon />}
+                  startIcon={<SendOutlinedIcon />}
                   loadingPosition="start"
                   loading={onRequest}
                   onClick={onAddReview}

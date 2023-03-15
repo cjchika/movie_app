@@ -1,7 +1,7 @@
 import responseHandler from "../handlers/response.handler.js";
-import modelReview from "../models/model.review.js";
+import reviewModel from "../models/model.review.js";
 
-const createReview = async (req, res) => {
+const create = async (req, res) => {
   try {
     const { movieId } = req.params;
 
@@ -23,11 +23,11 @@ const createReview = async (req, res) => {
   }
 };
 
-const removeReview = async (req, res) => {
+const remove = async (req, res) => {
   try {
     const { reviewId } = req.params;
 
-    const review = await modelReview.findOne({
+    const review = await reviewModel.findOne({
       _id: reviewId,
       user: req.user.id,
     });
@@ -44,8 +44,10 @@ const removeReview = async (req, res) => {
 
 const getReviewsOfUser = async (req, res) => {
   try {
-    const reviews = await modelReview
-      .find({ user: req.user.id })
+    const reviews = await reviewModel
+      .find({
+        user: req.user.id,
+      })
       .sort("-createdAt");
 
     responseHandler.ok(res, reviews);
@@ -54,4 +56,4 @@ const getReviewsOfUser = async (req, res) => {
   }
 };
 
-export default { createReview, removeReview, getReviewsOfUser };
+export default { create, remove, getReviewsOfUser };

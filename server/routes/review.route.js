@@ -28,15 +28,10 @@ router.post(
     .withMessage("mediaType invalid"),
   body("mediaTitle").exists().withMessage("mediaTitle is required"),
   body("mediaPoster").exists().withMessage("mediaPoster is required"),
-  body("mediaRate").exists().withMessage("mediaRate is required"),
   requestHandler.validate,
-  reviewController.createReview
+  reviewController.create
 );
 
-router.delete(
-  "/:reviewId",
-  tokenMiddleware.auth,
-  reviewController.removeReview
-);
+router.delete("/:reviewId", tokenMiddleware.auth, reviewController.remove);
 
 export default router;
