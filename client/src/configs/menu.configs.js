@@ -23,7 +23,7 @@ const main = [
     display: "tv series",
     path: "/tv",
     icon: LiveTvOutLinedIcon,
-    state: "hometv",
+    state: "tv",
   },
   {
     display: "search",

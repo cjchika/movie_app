@@ -81,6 +81,13 @@ const MediaList = () => {
         mediaType={mediaType}
         mediaCategory={mediaCategories[currentCategory]}
       />
+      <Box sx={{ ...uiConfigs.style.mainContent }}>
+        <Stack spacing={2}>
+          <Typography fontWeight="700" variant="h5">
+            {mediaType === tmdbConfigs.mediaType.movie ? "Movies" : "TV Series"}
+          </Typography>
+        </Stack>
+      </Box>
     </>
   );
 };
