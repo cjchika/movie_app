@@ -66,7 +66,23 @@ const MediaList = () => {
     dispatch,
   ]);
 
-  return <div>MediaList</div>;
+  const onCategoryChange = (categoryIndex) => {
+    if (currentCategory === categoryIndex) return;
+    setMedias([]);
+    setCurrPage(1);
+    setCurrentCategory(categoryIndex);
+  };
+
+  const onLoadMore = () => setCurrPage(currPage + 1);
+
+  return (
+    <>
+      <HeroSlide
+        mediaType={mediaType}
+        mediaCategory={mediaCategories[currentCategory]}
+      />
+    </>
+  );
 };
 
 export default MediaList;
