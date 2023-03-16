@@ -6,7 +6,6 @@ import { useParams } from "react-router-dom";
 import tmdbConfigs from "../api/configs/tmdb.configs";
 import mediaApi from "../api/modules/media.api";
 import uiConfigs from "../configs/ui.configs";
-import usePrevious from "../hooks/usePrevious";
 import HeroSlide from "../components/common/HeroSlide";
 import MediaGrid from "../components/common/MediaGrid";
 import { setAppState } from "../redux/features/appStateSlice";
@@ -20,16 +19,22 @@ const MediaList = () => {
   const [mediaLoading, setMediaLoading] = useState(false);
   const [currentCategory, setCurrentCategory] = useState(0);
   const [currPage, setCurrPage] = useState(1);
-  const prevMediaType = usePrevious(mediaType);
 
   const dispatch = useDispatch();
 
-  const mediaCategories = useMemo(() => ["popular", "top_rated"]);
+  const mediaCategories = useMemo(() => ["popular", "top_rated"], []);
   const category = ["popular", "top rated"];
+
+  // if (mediaType !== prevMediaType) {
+  //   setCurrPage(1);
+  //   setCurrentCategory(0);
+  //   window.scrollTo(0, 0);
+  // }
 
   useEffect(() => {
     dispatch(setAppState(mediaType));
-  }, [mediaType]);
+    window.scrollTo(0, 0);
+  }, [mediaType, dispatch]);
 
   useEffect(() => {
     const getMedias = async () => {
@@ -42,7 +47,7 @@ const MediaList = () => {
         page: currPage,
       });
       setMediaLoading(false);
-      setGlobalLoading(false);
+      dispatch(setGlobalLoading(false));
 
       if (err) toast.error(err.message);
       if (response) {
@@ -50,21 +55,9 @@ const MediaList = () => {
         else setMedias([...response.results]);
       }
     };
-    if (mediaType !== prevMediaType) {
-      setCurrPage(1);
-      setCurrentCategory(0);
-      window.scrollTo(0, 0);
-    }
 
     getMedias();
-  }, [
-    mediaType,
-    currentCategory,
-    currPage,
-    prevMediaType,
-    mediaCategories,
-    dispatch,
-  ]);
+  }, [mediaType, currentCategory, currPage, mediaCategories, dispatch]);
 
   const onCategoryChange = (categoryIndex) => {
     if (currentCategory === categoryIndex) return;
@@ -112,6 +105,15 @@ const MediaList = () => {
           </Stack>
         </Stack>
         <MediaGrid medias={medias} mediaType={mediaType} />
+        <LoadingButton
+          sx={{ marginTop: 8 }}
+          fullWidth
+          color="primary"
+          loading={mediaLoading}
+          onClick={onLoadMore}
+        >
+          load more
+        </LoadingButton>
       </Box>
     </>
   );
