@@ -25,7 +25,7 @@ const MediaList = () => {
   const dispatch = useDispatch();
 
   const mediaCategories = useMemo(() => ["popular", "top_rated"]);
-  const category = ["popular", "top_rated"];
+  const category = ["popular", "top rated"];
 
   useEffect(() => {
     dispatch(setAppState(mediaType));
@@ -82,11 +82,36 @@ const MediaList = () => {
         mediaCategory={mediaCategories[currentCategory]}
       />
       <Box sx={{ ...uiConfigs.style.mainContent }}>
-        <Stack spacing={2}>
+        <Stack
+          spacing={2}
+          direction={{ xs: "column", md: "row" }}
+          alignItems="center"
+          justifyContent="space-between"
+          sx={{ marginBottom: 4 }}
+        >
           <Typography fontWeight="700" variant="h5">
             {mediaType === tmdbConfigs.mediaType.movie ? "Movies" : "TV Series"}
           </Typography>
+          <Stack direction="row" spacing={2}>
+            {category.map((cate, index) => (
+              <Button
+                key={index}
+                size="large"
+                variant={currentCategory === index ? "contained" : "text"}
+                sx={{
+                  color:
+                    currentCategory === index
+                      ? "primary.contrastText"
+                      : "text.primary",
+                }}
+                onClick={() => setCurrentCategory(index)}
+              >
+                {cate}
+              </Button>
+            ))}
+          </Stack>
         </Stack>
+        <MediaGrid medias={medias} mediaType={mediaType} />
       </Box>
     </>
   );
