@@ -41,7 +41,7 @@ const MediaSearch = () => {
       setMedias([]);
       setPage(1);
     } else search();
-  }, [search, query]);
+  }, [search, query, mediaType, page]);
 
   useEffect(() => {
     setMedias([]);
@@ -84,6 +84,20 @@ const MediaSearch = () => {
               </Button>
             ))}
           </Stack>
+          <TextField
+            color="success"
+            placeholder="Search Climax"
+            sx={{ width: "100%" }}
+            autoFocus
+            onChange={onQueryChange}
+          />
+          <MediaGrid medias={medias} mediaType={mediaType} />
+
+          {medias.length > 0 && (
+            <LoadingButton loading={onSearch} onClick={() => setPage(page + 1)}>
+              load more
+            </LoadingButton>
+          )}
         </Stack>
       </Box>
     </>
