@@ -18,10 +18,52 @@ const FavouriteItem = ({ media, onRemoved }) => {
   const onRemove = async () => {
     if (onRequest) return;
     setOnRequest(true);
+    const { response, err } = await favoriteApi.remove({
+      favoriteId: media.id,
+    });
+    setOnRequest(false);
+
+    if (err) toast.error(err.message);
+    if (response) {
+      dispatch(removeFavorite({ mediaId: media.mediaId }));
+      onRemoved(media.id);
+    }
   };
+
+  return (
+    <>
+      <MediaItem media={media} mediaType={media.mediaType} />
+      <LoadingButton
+        fullWidth
+        variant="contained"
+        sx={{ marginTop: 2 }}
+        startIcon={<DeleteIcon />}
+        loadingPosition="start"
+        loading={onRequest}
+        onClick={onRemove}
+      >
+        remove
+      </LoadingButton>
+    </>
+  );
 };
 
 const FavoriteList = () => {
+  const [media, setMedia] = useState([]);
+  const [filteredMedia, setFilteredMedia] = useState([]);
+  const [page, setPage] = useState(1);
+  const [count, setCount] = useState(0);
+
+  const dispatch = useDispatch();
+
+  const skip = 8;
+
+  useEffect(() => {
+    const getFavorites = async () => {
+      dispatch(setGlobalLoading(true));
+    };
+  }, []);
+
   return <div>FavoriteList</div>;
 };
 
