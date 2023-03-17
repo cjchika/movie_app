@@ -18,6 +18,11 @@ const PersonMediaGrid = ({ personId }) => {
 
       if (err) toast.error(err.message);
       if (response) {
+        const mediasSorted = response.cast.sort(
+          (a, b) => getReleaseDate(b) - getReleaseDate(a)
+        );
+        getMedias([...mediasSorted]);
+        setFilteredMedias([...mediasSorted].splice(0, skip));
       }
     };
   }, [personId]);
@@ -30,7 +35,28 @@ const PersonMediaGrid = ({ personId }) => {
     return date.getTime();
   };
 
-  return <div>PersonMediaGrid</div>;
+  const onLoadMore = () => {
+    setFilteredMedias([
+      ...filteredMedias,
+      ...[...medias].splice(page * skip, skip),
+    ]);
+    setPage(page + 1);
+  };
+
+  return (
+    <>
+      <Grid container spacing={1} sx={{ marginRight: "-8px!important" }}>
+        {medias.map((media, index) => (
+          <Grid item xs={6} sm={4} md={3} key={index}>
+            <MediaItem media={media} mediaType={media.media_type} />
+          </Grid>
+        ))}
+      </Grid>
+      {filteredMedias.length < medias.length && (
+        <Button onClick={onLoadMore}>load more</Button>
+      )}
+    </>
+  );
 };
 
 export default PersonMediaGrid;
