@@ -14,7 +14,80 @@ const MediaSearch = () => {
   const [query, setQuery] = useState("");
   const [onSearch, setOnSearch] = useState(false);
   const [mediaType, setMediaType] = useState(mediaTypes[0]);
-  return <div>MediaSearch</div>;
+  const [medias, setMedias] = useState([]);
+  const [page, setPage] = useState(1);
+
+  const search = useCallback(async () => {
+    setOnSearch(true);
+
+    const { response, err } = await mediaApi.search({
+      mediaType,
+      query,
+      page,
+    });
+
+    setOnSearch(false);
+
+    if (err) toast.error(err.message);
+    if (response) {
+      if (page > 1) setMedias((m) => [...m, ...response.results]);
+      else setMedias([...response.results]);
+    }
+  }, [mediaType, query, page]);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    if (query.trim().length === 0) {
+      setMedias([]);
+      setPage(1);
+    } else search();
+  }, [search, query]);
+
+  useEffect(() => {
+    setMedias([]);
+    setPage(1);
+  }, [mediaType]);
+
+  const onCategoryChange = (selectedCategory) => setMediaType(selectedCategory);
+
+  const onQueryChange = (e) => {
+    const newQuery = e.target.value;
+    clearTimeout(timer);
+
+    timer = setTimeout(() => {
+      setQuery(newQuery);
+    }, timeout);
+  };
+
+  return (
+    <>
+      <Toolbar />
+      <Box sx={{ ...uiConfigs.style.mainContent }}>
+        <Stack spacing={2}>
+          <Stack
+            spacing={2}
+            direction="row"
+            justifyContent="center"
+            sx={{ width: "100%" }}
+          >
+            {mediaTypes.map((item, index) => (
+              <Button
+                size="large"
+                key={index}
+                variant={mediaType === item ? "contained" : "text"}
+                sx={{
+                  color: mediaType === item ? "primary.contrastText" : "text",
+                }}
+                onClick={() => onCategoryChange(item)}
+              >
+                {item}
+              </Button>
+            ))}
+          </Stack>
+        </Stack>
+      </Box>
+    </>
+  );
 };
 
 export default MediaSearch;
