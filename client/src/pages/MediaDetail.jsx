@@ -52,7 +52,7 @@ const MediaDetail = () => {
         mediaType,
         mediaId,
       });
-      console.log(response);
+      // console.log(response);
       dispatch(setGlobalLoading(false));
 
       if (response) {

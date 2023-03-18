@@ -10,10 +10,6 @@ export default mongoose.model(
         ref: "User",
         required: true,
       },
-      content: {
-        type: String,
-        required: true,
-      },
       mediaType: {
         type: String,
         enum: ["tv", "movie"],
