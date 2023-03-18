@@ -91,7 +91,6 @@ const MediaDetail = () => {
     setOnRequest(false);
 
     if (err) toast.error(err.message);
-
     if (response) {
       dispatch(addFavorite(response));
       setIsFavorite(true);
