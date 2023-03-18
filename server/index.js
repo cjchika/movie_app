@@ -17,7 +17,7 @@ app.use("/api/v1", routes);
 
 const port = process.env.PORT || 5000;
 
-export const server = http.createServer(app);
+const server = http.createServer(app);
 
 mongoose.set("strictQuery", false);
 mongoose
