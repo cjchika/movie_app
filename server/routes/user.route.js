@@ -78,8 +78,8 @@ router.put(
     .isLength({ min: 8 })
     .withMessage("confirmNewPassword minimum 8 characters")
     .custom((value, { req }) => {
-      if (value !== req.body.password)
-        throw new Error("Confirm Password does not match");
+      if (value !== req.body.newPassword)
+        throw new Error("confirmNePassword does not match");
       return true;
     }),
   requestHandler.validate,

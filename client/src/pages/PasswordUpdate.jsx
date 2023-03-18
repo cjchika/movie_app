@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setUser } from "../redux/features/userSlice";
 import { setAuthModalOpen } from "../redux/features/authModalSlice";
+import { LoadingButton } from "@mui/lab";
 
 const PasswordUpdate = () => {
   const [onRequest, setOnRequest] = useState(false);
@@ -21,7 +22,7 @@ const PasswordUpdate = () => {
     initialValues: {
       password: "",
       newPassword: "",
-      confirmPassword: "",
+      confirmNewPassword: "",
     },
     validationSchema: Yup.object({
       password: Yup.string()
@@ -30,10 +31,10 @@ const PasswordUpdate = () => {
       newPassword: Yup.string()
         .min(8, "newPassword minimum 8 characters")
         .required("newPassword is required"),
-      confirmPassword: Yup.string()
+      confirmNewPassword: Yup.string()
         .oneOf([Yup.ref("newPassword")], "confirmNewPassword not match")
-        .min(8, "confirmPassword minimum 8 characters")
-        .required("confirmPassword is required"),
+        .min(8, "confirmNewPassword minimum 8 characters")
+        .required("confirmNewPassword is required"),
     }),
     onSubmit: async (values) => onUpdate(values),
   });
@@ -60,7 +61,61 @@ const PasswordUpdate = () => {
     <Box sx={{ ...uiConfigs.style.mainContent }}>
       <Container header="Update password">
         <Box component="form" maxWidth="400px" onSubmit={form.handleSubmit}>
-          <Stack spacing={2}></Stack>
+          <Stack spacing={2}>
+            <TextField
+              type="password"
+              placeholder="password"
+              name="password"
+              fullWidth
+              value={form.values.password}
+              onChange={form.handleChange}
+              color="success"
+              error={
+                form.touched.password && form.errors.password !== undefined
+              }
+              helperText={form.touched.password && form.errors.password}
+            />
+            <TextField
+              type="password"
+              placeholder="new password"
+              name="newPassword"
+              fullWidth
+              value={form.values.newPassword}
+              onChange={form.handleChange}
+              color="success"
+              error={
+                form.touched.newPassword &&
+                form.errors.newPassword !== undefined
+              }
+              helperText={form.touched.newPassword && form.errors.newPassword}
+            />
+            <TextField
+              type="password"
+              placeholder="confirm new password"
+              name="confirmNewPassword"
+              fullWidth
+              value={form.values.confirmNewPassword}
+              onChange={form.handleChange}
+              color="success"
+              error={
+                form.touched.confirmNewPassword &&
+                form.errors.confirmNewPassword !== undefined
+              }
+              helperText={
+                form.touched.confirmNewPassword &&
+                form.errors.confirmNewPassword
+              }
+            />
+            <LoadingButton
+              type="submit"
+              variant="contained"
+              fullWidth
+              sx={{ marginTop: 4 }}
+              loading={onRequest}
+            >
+              update password
+            </LoadingButton>
+          </Stack>
         </Box>
       </Container>
     </Box>

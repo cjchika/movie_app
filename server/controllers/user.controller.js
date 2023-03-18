@@ -78,12 +78,14 @@ const updatePassword = async (req, res) => {
     if (!user) return responseHandler.unauthorized(res);
 
     if (!user.validPassword(password))
-      return responseHandler.badrequest(res, "Incorrect password");
+      return responseHandler.badrequest(res, "Wrong password");
+
+    user.setPassword(newPassword);
 
     await user.save();
 
     responseHandler.ok(res);
-  } catch (error) {
+  } catch {
     responseHandler.error(res);
   }
 };
