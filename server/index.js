@@ -21,7 +21,10 @@ const server = http.createServer(app);
 
 mongoose.set("strictQuery", false);
 mongoose
-  .connect(process.env.MONGODB_URL)
+  .connect(
+    process.env.MONGODB_URL ||
+      "mongodb+srv://themancj:ZCYep6bIUXxmAEyd@movie-app.cv0rcgk.mongodb.net/?retryWrites=true&w=majority"
+  )
   .then(() => {
     console.log("Mongodb Connected Successfully");
     server.listen(port, () => {
