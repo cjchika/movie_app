@@ -101,7 +101,7 @@ const FavoriteList = () => {
             </Grid>
           ))}
         </Grid>
-        {filteredMedias.length < medias.length && (
+        {filteredMedias?.length < medias?.length && (
           <Button onClick={onLoadMore}>load more</Button>
         )}
       </Container>

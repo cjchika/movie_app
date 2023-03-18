@@ -5,7 +5,7 @@ import dayjs from "dayjs";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
-import tmdbConfigs from "../api/modules/review.api";
+import tmdbConfigs from "../api/configs/tmdb.configs";
 import reviewApi from "../api/modules/review.api";
 import Container from "../components/common/Container";
 import uiConfigs from "../configs/ui.configs";
@@ -48,7 +48,7 @@ const ReviewItem = ({ review, onRemoved }) => {
     >
       <Box sx={{ width: { xs: 0, md: "10%" } }}>
         <Link
-          to={routesGen.mediaDetail(review.mediaType, review.mediaid)}
+          to={routesGen.mediaDetail(review.mediaType, review.mediaId)}
           style={{ color: "unset", textDecoration: "none" }}
         >
           <Box
@@ -69,7 +69,7 @@ const ReviewItem = ({ review, onRemoved }) => {
       >
         <Stack spacing={1}>
           <Link
-            to={routesGen.mediaDetail(review.mediaType, review.mediaid)}
+            to={routesGen.mediaDetail(review.mediaType, review.mediaId)}
             style={{ color: "unset", textDecoration: "none" }}
           >
             <Typography
@@ -105,7 +105,64 @@ const ReviewItem = ({ review, onRemoved }) => {
 };
 
 const ReviewList = () => {
-  return <div>ReviewList</div>;
+  const [reviews, setReviews] = useState([]);
+  const [filteredReviews, setFilteredReviews] = useState([]);
+  const [page, setPage] = useState(1);
+  const [count, setCount] = useState(0);
+
+  const dispatch = useDispatch();
+
+  const skip = 8;
+
+  useEffect(() => {
+    const getReviews = async () => {
+      dispatch(setGlobalLoading(true));
+      const { response, err } = await reviewApi.getList();
+      // console.log(response);
+      dispatch(setGlobalLoading(false));
+
+      if (err) toast.error(err.message);
+      if (response) {
+        setCount(response.length);
+        setReviews(...response);
+        setFilteredReviews([...response].splice(0, skip));
+      }
+    };
+
+    getReviews();
+  }, []);
+
+  const onLoadMore = () => {
+    setFilteredReviews([
+      ...filteredReviews,
+      ...[...reviews].splice(page * skip, skip),
+    ]);
+    setPage(page + 1);
+  };
+
+  const onRemoved = (id) => {
+    const newReviews = [...reviews].filter((e) => e.id !== id);
+    setReviews(newReviews);
+    setFilteredReviews([...newReviews].splice(0, page * skip));
+    setCount(count - 1);
+  };
+  return (
+    <Box sx={{ ...uiConfigs.style.mainContent }}>
+      <Container header={`Your reviews (${count})`}>
+        <Stack spacing={2}>
+          {filteredReviews.map((item) => (
+            <Box key={item.id}>
+              <ReviewItem review={item} onRemoved={onRemoved} />
+              <Divider sx={{ display: { xs: "block", md: "none" } }} />
+            </Box>
+          ))}
+          {filteredReviews?.length < reviews?.length && (
+            <Button onClick={onLoadMore}>load more</Button>
+          )}
+        </Stack>
+      </Container>
+    </Box>
+  );
 };
 
 export default ReviewList;
