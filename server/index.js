@@ -33,4 +33,4 @@ mongoose
     process.exit(1);
   });
 
-module.exports = { server };
+export default server;
